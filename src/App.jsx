@@ -1,56 +1,35 @@
 import { useState } from "react";
 
-/* const gifts = [
-  'CPU i9',
-  'GPU RTX 3090',
-  'Motherboard',
-] */
-
-const courses = [
-  {
-    id : 1,
-    name: 'React',
-  },
-  {
-    id : 2,
-    name: 'Vue',
-  },
-  {
-    id : 3,
-    name: 'Angular',
-  },
-]
-
 function App() {
-  const [checked, setChecked] = useState([]);
+  const [task, setTask] = useState();
+  const [tasks, setTasks] = useState(() => {
+    return (
+      JSON.parse(localStorage.getItem("tasks")) || []
+    )
+  });
 
-  console.log(checked);
-  const handleCheck = (id) => {
-    if(checked.includes(id)) {
-      setChecked(prev => prev.filter(item => item !== id));
-      return;
-    }
-    setChecked(prev => [...prev, id]);
-  }
-
-  const submit = () => {
-    console.log({
-      ids: checked,
-    });
+  const addTask = () => {
+    setTasks(prev => {
+      const newTask = [...prev, task];
+      localStorage.setItem("tasks", JSON.stringify(newTask));
+      return newTask;}
+    );
+    setTask("");
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      {courses.map(course => (
-        <div>
-          <input type="checkbox" 
-          checked={checked.includes(course.id)}
-          onChange={() => handleCheck(course.id)}
-          />
-          {course.name}
-        </div>
-      ))}
-      <button onClick={submit}>submit</button>
+    <div style={{ padding: "20px" }}>
+      <input type="text"
+      onChange={(e => setTask(e.target.value))}
+      value={task}
+      />
+      <button onClick={addTask}>add task</button>
+      
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>{task}</li>
+        ))}
+      </ul>
     </div>
   )
 }
