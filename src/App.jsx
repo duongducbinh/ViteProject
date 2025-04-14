@@ -1,36 +1,41 @@
-import { useState } from "react";
+import { Outlet, Routes, Route, Link } from 'react-router'
+import Home from './pages/Home'
+import About from './pages/About'
 
-function App() {
-  const [task, setTask] = useState();
-  const [tasks, setTasks] = useState(() => {
-    return (
-      JSON.parse(localStorage.getItem("tasks")) || []
-    )
-  });
 
-  const addTask = () => {
-    setTasks(prev => {
-      const newTask = [...prev, task];
-      localStorage.setItem("tasks", JSON.stringify(newTask));
-      return newTask;}
-    );
-    setTask("");
-  }
-
+const App = () => {
   return (
-    <div style={{ padding: "20px" }}>
-      <input type="text"
-      onChange={(e => setTask(e.target.value))}
-      value={task}
-      />
-      <button onClick={addTask}>add task</button>
-      
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>{task}</li>
-        ))}
-      </ul>
+    <>
+      <h1>React Router</h1>
+      <Navigator />
+      <Routes>
+        <Route path='/' element={<Layout />}>
+          <Route path='Home' element={<Home />} />
+          <Route path='About' element={<About />} />
+        </Route>
+      </Routes>
+    </>
+  )
+}
+
+const Navigator = () => {
+  return (
+    <div>
+      <nav>
+        <Link to="/Home">Home</Link>
+        <Link to="/About">About</Link>
+      </nav>
     </div>
+  )
+}
+
+const Layout = () => {
+  return (
+    <>
+      <main style={{ padding: '1rem 0' }}>
+        <Outlet />
+      </main>
+    </>
   )
 }
 
