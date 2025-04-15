@@ -1,4 +1,5 @@
 import { Outlet, Routes, Route, NavLink } from 'react-router'
+import { useState } from 'react'
 import Home from './pages/Home'
 import About from './pages/About'
 
@@ -15,6 +16,8 @@ const App = () => {
 }
 
 const Layout = () => {
+  const [show, setShow] = useState(false)
+
   const style = ({ isActive }) => ({
     fontWeight: isActive ? "bold" : "normal",
   })
@@ -32,7 +35,8 @@ const Layout = () => {
         <NavLink to="/About" style={style}>About</NavLink>
       </nav>
       <main style={{ padding: '1rem 0' }}>
-        <Outlet />
+        <button onClick={() => { setShow(!show) }}>Show content</button>
+        {show &&  <Outlet />}
       </main>
 
     </>

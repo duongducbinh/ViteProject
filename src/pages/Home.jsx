@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Home () {
+function Home() {
     return (
-    <div style={{ padding: '1rem', backgroundColor: 'blueviolet'}}>
-        <h1>Wellcome to Home</h1> 
-        <p>This is the HomePage</p>
-    </div>
+        <div style={{ padding: '1rem', backgroundColor: 'blueviolet' }}>
+            <h1>Wellcome to Home</h1>
+            <p>This is the HomePage</p>
+        </div>
     )
 }
 
